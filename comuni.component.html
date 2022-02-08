@@ -1,0 +1,60 @@
+<p class="title" style="margin-bottom: 0px !important">Comune</p>
+
+<dx-load-panel [closeOnOutsideClick]="false"></dx-load-panel>
+<div *ngIf="!comuniResponse" style="padding: 10px"><em>Caricamento...</em></div>
+<app-upload-csv [CsvApiUrl]="comuniResponse" (loadData)="loadDataFromServer()">
+</app-upload-csv>
+<dx-data-grid
+  #ComuniResponseDataGrid
+  keyExpr="CodComune"
+  id="gridContainer"
+  [dataSource]="comuniResponse"
+  [remoteOperations]="true"
+  [allowColumnReordering]="true"
+  [rowAlternationEnabled]="true"
+  [allowColumnResizing]="true"
+  [columnResizingMode]="nextColumn"
+  [showBorders]="true"
+  [masterDetail]="{ enabled: true, template: 'detail' }"
+  (onRowInserting)="onRowInserting($event)"
+  (onRowUpdating)="onRowUpdating($event)"
+  (onRowUpdated)="onRowUpdated($event)"
+  (onRowRemoving)="onRowRemoving($event)"
+  (onRowRemoved)="onRowRemoved($event)"
+
+  >
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager [showPageSizeSelector]="true"[allowedPageSizes]="[10, 25, 50, 100, 'Mostra tutto']"[showInfo]="true"visible="true"[infoText]="infoText"></dxo-pager>
+ <dxo-editing mode="popup"[allowUpdating]="true"[allowDeleting]="true"[allowAdding]="true"[useIcons]="true">
+    <dxo-texts saveRowChanges="Salva"cancelRowChanges="Annulla"deleteRow="Rimuovi"editRow="Modifica"addRow="Aggiungi"noDataText="Nessun dato presente">
+    </dxo-texts></dxo-editing>
+    <dxo-search-panel [visible]="true"[highlightCaseSensitive]="true"></dxo-search-panel>
+
+    <dxi-column type="buttons" [width]="110">
+    <dxi-button name="edit" ></dxi-button>
+    <dxi-button name="delete"></dxi-button>
+    <dxi-button hint ="AppBancario" icon="bulletlist" [onClick]="goToLink"> </dxi-button>
+
+ </dxi-column>
+
+
+  <dxo-group-panel [visible]="true"></dxo-group-panel>
+  <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+
+  <dxi-column dataField="CodComune"dataType="string"[visible]="true"[allowEditing]="true"[formItem]="{ visible: true }"></dxi-column>
+  <dxi-column dataField="IdTrasco"dataType="string"[allowEditing]="true"[visible]="true"[formItem]="{ visible: true }"></dxi-column>
+  <dxi-column dataField="Comune"dataType="string"[allowEditing]="true"[visible]="true"></dxi-column>
+  <dxi-column dataField="CodProvincia"dataType="string"[allowEditing]="true"[visible]="true"></dxi-column>
+  <dxi-column dataField="Cap"dataType="string"[allowEditing]="true"[visible]="true"></dxi-column>
+  <dxi-column dataField="PrefissoTeleSelettivo" dataType="string"format="#0.0000"[allowEditing]="true"[visible]="true"></dxi-column>
+  <dxi-column dataField="CodiceIstat"dataType="string"caption="Differenza"format="#0.0000"[allowEditing]="true"[visible]="true"[editorOptions]="{ format: '#0.0000', showClearButton: true }"></dxi-column>
+  <dxi-column dataField="DataUltimaModifica"dataType="Date"[allowEditing]="true"[visible]="true"></dxi-column>
+  <dxi-column dataField="Zona"dataType="string"format="fixedPoint"precision="0"format="#0"[allowEditing]="true"[visible]="true"[editorOptions]="{ format: '#0', showClearButton: true }">
+  <dxi-validation-rule type="required"message="Campo Obbligatorio"></dxi-validation-rule></dxi-column>
+  <dxi-column dataField="Utente"dataType="string"[allowEditing]="true"[visible]="true"[formItem]="{ visible: true }"></dxi-column>
+
+
+
+
+</dx-data-grid>
+
